@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="GM"
+           constructor="TagControl"
+           version="1.0.3"
+           display-name-key="Tag Control"
+           description-key="Edits a delimited text column as tags, optionally synchronized with a Tag table and a Bridge table"
+           control-type="standard">
+
+    <external-service-usage enabled="false">
+    </external-service-usage>
+
+    <!-- Bound text field that stores the tags (e.g. "Tag1;Tag2;Tag3") -->
+    <property name="value" display-name-key="Tags column" description-key="Text column that stores the delimited tag list" of-type="SingleLine.Text" usage="bound" required="true" />
+
+    <!-- Configuration as short individual properties (form designer limits static values to 100 characters) -->
+    <property name="tagTable" display-name-key="Tag table" description-key="Logical name of the Tag table, e.g. gm_tag" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="tagNameColumn" display-name-key="Tag name column" description-key="Logical name of the Tag name column, e.g. gm_name" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="bridgeTable" display-name-key="Bridge table" description-key="Logical name of the Bridge table, e.g. gm_accounttag. Leave empty for text-only mode" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="bridgeTargetLookup" display-name-key="Bridge lookup to record" description-key="Lookup column on the Bridge table pointing to this table, e.g. gm_accountid" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="bridgeTagLookup" display-name-key="Bridge lookup to tag" description-key="Lookup column on the Bridge table pointing to the Tag table, e.g. gm_tagid" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="delimiter" display-name-key="Delimiter" description-key="Tag separator, default ;" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="maxTags" display-name-key="Maximum tags" description-key="Maximum number of tags, default 50" of-type="Whole.None" usage="input" required="false" />
+    <property name="caseInsensitive" display-name-key="Case insensitive" description-key="Treat Vip and vip as the same tag, default Yes" of-type="TwoOptions" usage="input" required="false" />
+    <property name="syncTextOnLoad" display-name-key="Sync text to Dataverse on load" description-key="Create Bridge rows for tags found in the text column but missing in Dataverse, default Yes" of-type="TwoOptions" usage="input" required="false" />
+
+    <!-- Optional JSON configuration (alternative to the properties above; bind it to a column if longer than 100 characters) -->
+    <property name="config" display-name-key="Configuration JSON (optional)" description-key="Optional JSON configuration. Individual properties override it" of-type="SingleLine.Text" usage="input" required="false" />
+
+    <!-- Optional record context overrides. When empty, the control uses the host form context. -->
+    <property name="entityId" display-name-key="Record id (optional)" description-key="Leave empty on forms: the record id is read from the form" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="entityName" display-name-key="Table name (optional)" description-key="Leave empty on forms: the table name is read from the form" of-type="SingleLine.Text" usage="input" required="false" />
+
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="Css/TagControl.css" order="1" />
+    </resources>
+
+    <feature-usage>
+      <uses-feature name="WebAPI" required="true" />
+      <uses-feature name="Utility" required="true" />
+    </feature-usage>
+  </control>
+</manifest>
